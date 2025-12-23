@@ -66,7 +66,7 @@ function App() {
     callSearchAPI(searchInput);
   }
 
-  function convertTemp() {
+  function convertTemp():void {
     if(tempUnit === "imperial") {
       setTempUnit("metric")
     } else {
@@ -102,6 +102,7 @@ function App() {
                       {tempUnit === "imperial" ? weatherData.main.temp : ((weatherData.main.temp - 32) * 5/9).toFixed(2)}
                       {tempUnit === "imperial" ? " °F" : " °C"}
                     </h1>
+                    {/* this shows if weather is clear or foggy */}
                     <p className="mt-8 text-2xl font-medium">{weatherData.weather[0].main}</p>
                     <hr className='mt-5'/>
                     <h1 className='mt-2 text-lg'>Humidity</h1>
@@ -116,6 +117,7 @@ function App() {
               {/* forecasting */}
               {forecast.length > 0 && (
                 <div className="text-xl">
+                  {/* 5 day weather forecast */}
                     <h1 className='font-semibold'>Weather Forecast</h1>
                       <div className="mt-5 text-lg flex flex-row space-x-8 justify-center">
                         {forecast.map((day, index:number) => 
@@ -129,7 +131,11 @@ function App() {
                               src={`http://openweathermap.org/img/wn/${day.weather[0].icon}.png`}
                               alt={day.weather[0].description}
                             />
-                            <p>{Math.round(day.main.temp)}°F</p>
+                            {/* change forecast to imperial or metric */}
+                            <p>
+                              {tempUnit === "imperial" ? (Math.round(day.main.temp)) : (Math.round(day.main.temp - 32) * 5/9).toFixed(0)}
+                              {tempUnit === "imperial" ? " °F" : " °C"}
+                            </p>
                           </div>
                         )}
                     </div>
